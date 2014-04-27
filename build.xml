@@ -1,0 +1,35 @@
+<project name="ITPDP-server-side" default="copy" basedir=".">
+	<property name="src" location="src"/>
+	<property name="classes" location="WebContent/WEB-INF/classes"/>
+	<property name="lib" location="WebContent/WEB-INF/lib"/>
+	<property name="tomcat" location="/home/markus/apache-tomcat-7.0.50/webapps/itpdp-server-side"/>
+	<property name="webcontent" location="WebContent"/>
+
+	<path id="lib-classpath">
+		<fileset dir="${lib}">
+			<include name="*.jar"/>
+		</fileset>
+	</path>
+
+	<target name="init">
+		<tstamp/>
+		<mkdir dir="${classes}"/>
+	</target>
+
+	<target name="compile" depends="init">
+		<javac destdir="${classes}">
+			<src path="${src}"/>
+			<classpath refid="lib-classpath"/>
+		</javac>
+	</target>
+
+	<target name="copy" depends="compile">
+		<copy todir="${tomcat}">
+			<fileset dir="${webcontent}"/>
+		</copy>
+	</target>
+
+	<target name="clean">
+		<delete dir="${classes}"/>
+	</target>
+</project>
